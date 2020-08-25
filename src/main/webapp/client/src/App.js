@@ -7,9 +7,8 @@ import HomePage from "./pages/HomePage";
 class App extends Component {
   render(){
     return (
-
         <Router>
-            {/*home-page*/}
+          {/*home-page*/}
           <Route exact path="/">
             <HomePage/>
           </Route>
