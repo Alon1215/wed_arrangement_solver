@@ -1,13 +1,14 @@
 import React, {Component} from "react";
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, MDBContainer, MDBMask, MDBView } from 'mdbreact';
 import { BrowserRouter as Router } from 'react-router-dom';
+import NavBar from "../layouts/NavBar";
+
 
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            collapse: false,
-            isWideEnough: false,
+            collapse: false
         };
         this.onClick = this.onClick.bind(this);
     }
@@ -19,37 +20,20 @@ class HomePage extends React.Component {
     }
 
     render() {
+
         return (
             <div>
                 <header>
-                    <Router>
-                        <MDBNavbar color="bg-primary" fixed="top" dark expand="md" scrolling transparent>
-                            <MDBNavbarBrand href="/">
-                                <strong>Navbar</strong>
-                            </MDBNavbarBrand>
-                            {!this.state.isWideEnough && <MDBNavbarToggler onClick={this.onClick} />}
-                            <MDBCollapse isOpen={this.state.collapse} navbar>
-                                <MDBNavbarNav left>
-                                    <MDBNavItem active>
-                                        <MDBNavLink to="#">Home</MDBNavLink>
-                                    </MDBNavItem>
-                                    <MDBNavItem>
-                                        <MDBNavLink to="#">Link</MDBNavLink>
-                                    </MDBNavItem>
-                                    <MDBNavItem>
-                                        <MDBNavLink to="#">Profile</MDBNavLink>
-                                    </MDBNavItem>
-                                </MDBNavbarNav>
-                            </MDBCollapse>
-                        </MDBNavbar>
-                    </Router>
+                    <NavBar isLoggedIn={null} isAdmin={null} isHomePage={true}/>
 
-                    <MDBView src="https://mdbootstrap.com/img/Photos/Others/img%20(40).jpg">
-                        <MDBMask overlay="purple-light" className="flex-center flex-column text-white text-center">
-                            <h2>This Navbar is fixed</h2>
-                            <h5>It will always stay visible on the top, even when you scroll down</h5>
-                            <p>Navbar's background will switch from transparent to solid color while scrolling down</p><br />
-                            <p>Full page intro with background image will be always displayed in full screen mode, regardless of device </p>
+                    <MDBView src="https://live.staticflickr.com/4690/24082885557_eb6f698c97.jpg">
+                        <MDBMask className="flex-center flex-column text-white">
+                            <h2 >Use Automatic Sitting Plan For Your Wedding </h2>
+                            <h5 >Because:</h5>
+                            <p>1. It's easy</p><br />
+                            <p>2. It's accurate</p>
+                            <p>3.No other reason required</p>
+
                         </MDBMask>
                     </MDBView>
                 </header>
