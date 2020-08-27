@@ -5,6 +5,11 @@ import './App.css';
 import HomePage from "./pages/HomePage";
 
 class App extends Component {
+    state = {
+        isLoggedIn: false,
+        isAdmin: false,
+        username:"",
+    }
 
   render(){
     return (
