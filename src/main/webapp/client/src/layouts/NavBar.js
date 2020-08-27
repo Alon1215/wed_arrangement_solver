@@ -15,30 +15,58 @@ class NavBar extends Component {
     }
 
     render() {
+        if (this.props.isHomePage){
 
-        return (
-            <MDBNavbar color="info-color" fixed="top" dark expand="md" scrolling transparent>
-                <MDBNavbarBrand href="/">
-                    <strong>Wed</strong>
-                </MDBNavbarBrand>
-                {!this.state.isWideEnough && <MDBNavbarToggler onClick={this.onClick}/>}
-                <MDBCollapse isOpen={this.state.collapse} navbar>
-                    <MDBNavbarNav left>
-                        <MDBNavItem active>
-                            <MDBNavLink to="#">Home</MDBNavLink>
-                        </MDBNavItem>
-                        <MDBNavItem>
-                            <MDBNavLink to="#">Register</MDBNavLink>
-                        </MDBNavItem>
-                        <MDBNavItem>
-                            <MDBNavLink to="#">Login</MDBNavLink>
-                        </MDBNavItem>
-                        <MDBNavItem>
-                            <MDBNavLink to="#">More About Us</MDBNavLink>
-                        </MDBNavItem>
-                    </MDBNavbarNav>
-                </MDBCollapse>
-            </MDBNavbar>);
+            return (
+                <MDBNavbar color="info-color" fixed="top" dark expand="md" scrolling transparent>
+                    <MDBNavbarBrand href="/">
+                        <strong>Wed</strong>
+                    </MDBNavbarBrand>
+                    {!this.state.isWideEnough && <MDBNavbarToggler onClick={this.onClick}/>}
+                    <MDBCollapse isOpen={this.state.collapse} navbar>
+                        <MDBNavbarNav left>
+                            <MDBNavItem active>
+                                <MDBNavLink to="#">Home</MDBNavLink>
+                            </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink to="#">Register</MDBNavLink>
+                            </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink to="#">Login</MDBNavLink>
+                            </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink to="#">More About Us</MDBNavLink>
+                            </MDBNavItem>
+                        </MDBNavbarNav>
+                    </MDBCollapse>
+                </MDBNavbar>);
+        }
+        else{
+            return (
+                <MDBNavbar color="info-color" fixed="top" dark expand="md">
+                    <MDBNavbarBrand href="/">
+                        <strong>Wed</strong>
+                    </MDBNavbarBrand>
+                    {!this.state.isWideEnough && <MDBNavbarToggler onClick={this.onClick}/>}
+                    <MDBCollapse isOpen={this.state.collapse} navbar>
+                        <MDBNavbarNav left>
+                            <MDBNavItem active>
+                                <MDBNavLink to="#">Home</MDBNavLink>
+                            </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink to="#">Register</MDBNavLink>
+                            </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink to="#">Login</MDBNavLink>
+                            </MDBNavItem>
+                            <MDBNavItem>
+                                <MDBNavLink to="#">More About Us</MDBNavLink>
+                            </MDBNavItem>
+                        </MDBNavbarNav>
+                    </MDBCollapse>
+                </MDBNavbar>);
+        }
+
     }
 }
 
