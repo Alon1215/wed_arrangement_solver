@@ -10,5 +10,4 @@ public class WedApplication {
 		System.out.println("habibi supreme");
 		SpringApplication.run(WedApplication.class, args);
 	}
-
 }
