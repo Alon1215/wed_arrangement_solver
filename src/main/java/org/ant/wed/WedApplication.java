@@ -1,5 +1,6 @@
 package org.ant.wed;
 
+import org.ant.wed.repositories.RoleRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,8 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WedApplication {
 
 	public static void main(String[] args) {
-		System.out.println("habibi supreme");
 		SpringApplication.run(WedApplication.class, args);
 	}
-
 }
