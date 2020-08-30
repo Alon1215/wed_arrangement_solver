@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
 
 import HomePage from "./pages/HomePage";
+import LoginRegisterPage from "./pages/Register&Login";
 
 class App extends Component {
     state = {
@@ -17,6 +18,9 @@ class App extends Component {
           {/*home-page*/}
           <Route exact path="/">
             <HomePage/>
+          </Route>
+          <Route path="/login&register">
+              <LoginRegisterPage />
           </Route>
         </Router>
     );
