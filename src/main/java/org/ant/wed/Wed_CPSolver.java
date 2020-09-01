@@ -4,10 +4,8 @@ package org.ant.wed;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
 // [START import]
-import com.google.ortools.constraintsolver.RoutingSearchParameters;
 import com.google.ortools.sat.*;
 ;
 // [END import]
@@ -16,15 +14,16 @@ import com.google.ortools.sat.*;
  * WEDDING TABLE ARRANGEMENT - LOGIC & METHODS
  * This class contains the logic of the reduction & solution we have implemented.
  * We use @Invitee as an object represents in invited person.
- *
- * @author Alon Michaeli
- * @version 1.0
  * @Wed_src contains the methods and logic to solution
- * @since 2020-08-24
+ *
+ * @author  Alon Michaeli
+ * @version 1.0
+ * @since   2020-08-24
  */
 
 
-enum Category {
+enum Category
+{
     FAMILY, FRIENDS, WORK;
 }
 
@@ -50,7 +49,6 @@ public class Wed_CPSolver {
     //model:
     private CpModel model;
 
-
     public Wed_CPSolver(List<Invitee> inviteList, List<Integer> tables) {
         this.inviteList = inviteList;
         this.edgesMatrix = new int[inviteList.size()][inviteList.size()];
@@ -69,8 +67,8 @@ public class Wed_CPSolver {
     /**
      * Run Algorithm on the given invite list & tables
      */
-    public void run() {
-        if (invitedNumber < inviteList.size()) {
+    public void run(){
+        if (invitedNumber < inviteList.size()){
             System.err.println("Insufficient number of chairs");
             return;
         }
@@ -78,16 +76,14 @@ public class Wed_CPSolver {
         // Create the model.
         this.model = new CpModel();
 
-
         // Create the variables & constraints:
         setupModel2();
 
         // Create a solver and solve the model.
         CpSolver solver = new CpSolver();
-        solver.getParameters().setNumSearchWorkers(8);
-        System.out.println(solver.getParameters().getNumSearchWorkers());
         System.out.println("Solver -> start");
         CpSolverStatus status = solver.solve(model);
+
 
         if (status == CpSolverStatus.FEASIBLE || status == CpSolverStatus.OPTIMAL) {
             printSolution(solver);
@@ -110,17 +106,17 @@ public class Wed_CPSolver {
         int counter;
         System.out.println("Table arrangement:\n");
         for (int k = 0; k < tables.size(); k++) {
-            counter = 0;
-            System.out.println("Table #" + k + ", max capacity: " + tables.get(k) + " contains invitees:\n");
+            counter  = 0;
+            System.out.println("Table #" + k + ", max capacity: "+ tables.get(k) + " contains invitees:\n");
             for (int i = 0; i < inviteList.size(); i++) {
-                if (solver.value(exps[i][k]) == 1) {
+                if (solver.value(exps[i][k]) == 1){
                     System.out.print(inviteList.get(i).getName() + "\t");
                     //System.out.print(i + "\t");
                     counter++;
-                    if ((counter) % 10 == 0) System.out.println();
+                    if ((counter) % 10 == 0 ) System.out.println();
                 }
             }
-            System.out.println("\n\n" + counter + "/" + tables.get(k) + "\n");
+            System.out.println("\n\n" + counter + "/" + tables.get(k) +"\n");
         }
     }
 
@@ -130,7 +126,7 @@ public class Wed_CPSolver {
      * Constraint_1: I_kij = I_kji (I_kii =  0 for every i)
      * Constraint_2: table size = max residents in table k
      * Constraint_3: each i seats exactly in one table
-     * Constraint_4: I_k = 1 <=> for all: q != k, I_qij = 0
+     * Constraint_4: I_ik = 1 & I_jk = 1  <=> for all: q != k, I_kij = 1
      * set model to maximize the objective expression
      */
     private void setupModel2() {
@@ -148,7 +144,7 @@ public class Wed_CPSolver {
 
                     if (i != j) {
                         vars[k][i][j] = this.model.newBoolVar("I_" + k + "^" + i + "^" + j);
-                        //vars[k][j][i] = vars[k][i][j];
+                        vars[k][j][i] = vars[k][i][j];
                     } else {
                         //Constraint_1.1: for every i, I_kii = 0
                         vars[k][i][j] = model.newConstant(0);
@@ -159,16 +155,15 @@ public class Wed_CPSolver {
 
 
             // Constraint_2: table size = max residents in table k
-            model.addLessOrEqual(LinearExpr.sum(allKExps(k)), tables.get(k));
+            model.addLessOrEqual(LinearExpr.sum(allKExps(k)),tables.get(k));
         }
 
         //Constraint_3: each i seats exactly in one table @TODO: check if needed, when constraint 4 is active
-        for (int i = 0; i < invitedNumber; i++) {
-            model.addEquality(LinearExpr.sum(exps[i]), 1);
-        }
+//        for (int i = 0; i < invitedNumber; i++) {
+//            model.addEquality(LinearExpr.sum(exps[i]), 1);
+//        }
 
-
-        //region old Contraint 4
+        //Constraint_4: I_ik = 1 & I_jk = 1  <=> I_kij = 1
 //        for (int i = 0; i < invitedNumber; i++) {
 //            for (int j = i + 1; j < invitedNumber; j++) {
 //                for (int k = 0; k < tablesNum; k++) {
@@ -184,23 +179,20 @@ public class Wed_CPSolver {
 //                }
 //            }
 //        }
-        //endregion
 
-        //   Constraint_4: I_ik = 1 & I_jk = 1  <=>   I_kij = 1
         for (int i = 0; i < invitedNumber; i++) {
-            for (int j = i + 1; j < invitedNumber; j++) {
+            for (int j = 0; j < invitedNumber; j++) {
                 for (int k = 0; k < tablesNum; k++) {
-                    if (i != j) {
-                        model.addProductEquality(vars[k][i][j], new IntVar[]{exps[i][k], exps[j][k]});
-                    }
+                    if (i != j)
+                        model.addProductEquality(vars[k][i][j],new IntVar[]{exps[i][k],exps[j][k]});
                 }
             }
         }
 
 
+
         // Set model's linear expression to maximize
         setMaxEquation();
-
     }
 
 
@@ -209,7 +201,7 @@ public class Wed_CPSolver {
      */
     private int getNumOfChairs() {
         int ret = 0;
-        for (int i = 0; i < tables.size(); i++) {
+        for (int i = 0; i <tables.size() ; i++) {
             ret += tables.get(i);
         }
         return ret;
@@ -221,10 +213,10 @@ public class Wed_CPSolver {
     public void evalEdgesMatrix() {
         int listSize = inviteList.size();
 
-        for (int i = 0; i < listSize; i++) {
+        for (int i=0; i < listSize; i++){
             Invitee curr = inviteList.get(i);
 
-            for (int j = i + 1; j < listSize; j++) {
+            for (int j = i + 1; j < listSize; j++){
                 if (edgesMatrix[i][j] == 0) {
                     //Edge hasn't been values yet
                     edgesMatrix[i][j] = curr.evalEdge(inviteList.get(j));
@@ -235,6 +227,7 @@ public class Wed_CPSolver {
     } // @TODO: fix & implement plus 1, if needed.
 
 
+
     /**
      * "Flattening" each array to a 1 dimensional array.
      * Afterwards create the linear expression (by scalar product).
@@ -242,52 +235,44 @@ public class Wed_CPSolver {
      */
     private void setMaxEquation() {
 
-        IntVar[] linearVars = new IntVar[tablesNum * invitedNumber * invitedNumber];
-        int[] linearEdges = new int[tablesNum * invitedNumber * invitedNumber];
-        Vector<IntVar> tempVars = new Vector<>();
-        Vector<Integer> tempCoef = new Vector<>();
+        IntVar[] linearVars = new IntVar[tablesNum* invitedNumber * invitedNumber];
+        int[] linearEdges = new int[tablesNum* invitedNumber * invitedNumber];
 
-        for (int k = 0; k < tablesNum; k++) {
+        for (int k = 0; k < tablesNum ; k++) {
             for (int i = 0; i < this.invitedNumber; i++) {
-                for (int j = i; j < this.invitedNumber; j++) {
-                    tempVars.addElement(vars[k][i][j]);
-                    tempCoef.addElement(edgesMatrix[i][j]);
+                for (int j = 0; j < this.invitedNumber; j++) {
+                    int position = k * (invitedNumber * invitedNumber) + (i * invitedNumber) + j;
 
-//                    //int position = k * (invitedNumber * invitedNumber) + (i * invitedNumber) + j;
-//                        linearVars[position] = vars[k][i][j];
-//                        linearEdges[position] = edgesMatrix[i][j];
+                    linearVars[position] = vars[k][i][j];
+                    linearEdges[position] = edgesMatrix[i][j];
                 }
+
             }
-        }
-        int[] temp = new int[tempCoef.size()];
-        for (int i = 0; i < tempCoef.size(); i++) {
-            temp[i] = tempCoef.get(i);
         }
 
         // set equation to be maximized
-        LinearExpr maxLinearExp = LinearExpr.scalProd(tempVars.toArray(new IntVar[tempVars.size()]), temp);
-
-        //LinearExpr maxLinearExp = LinearExpr.scalProd(linearVars,linearEdges);
+        LinearExpr maxLinearExp = LinearExpr.scalProd(linearVars,linearEdges);
         model.maximize(maxLinearExp);
     }
 
 
     /**
+     *
      * @param i given id (i) of invitee
      * @param k given table's index
      * @return array with I_ik, and all edges of i which are not in table k
      * Set the allowed assignment, which represents that i seats only by people in table k
      */
-    private IntVar[] not_i_k_array(int i, int k) {
+    private IntVar[] not_i_k_array (int i, int k){
 
-        IntVar[] ret = new IntVar[invitedNumber * (tablesNum - 1) + 1];
+        IntVar[] ret = new IntVar[invitedNumber *(tablesNum - 1) + 1];
         ret[0] = exps[i][k];
 
         for (int q = 0; q < k; q++) {
-            if (invitedNumber >= 0) System.arraycopy(vars[q][i], 0, ret, 1 + q * invitedNumber, invitedNumber);
+            if (invitedNumber >= 0) System.arraycopy(vars[q][i], 0, ret,  1 + q * invitedNumber, invitedNumber);
         }
 
-        for (int q = k + 1; q < tablesNum; q++) {
+        for (int q = k+1; q < tablesNum; q++) {
             if (invitedNumber >= 0)
                 System.arraycopy(vars[q][i], 0, ret, 1 + (q - 1) * invitedNumber, invitedNumber);
         }
@@ -300,10 +285,10 @@ public class Wed_CPSolver {
      * @return an array filled with 0, and first cell 1,
      * which represents an legal assignment of the variables
      */
-    private int[][] not_i_k_ass() {
+    private int[][] not_i_k_ass (){
 
-        int[] ret = new int[invitedNumber * (tablesNum - 1) + 1];
-        Arrays.fill(ret, 0); //@TODO: check if needed since initial value is 0
+        int[] ret = new int[invitedNumber *(tablesNum - 1) + 1];
+        Arrays.fill(ret,0); //@TODO: check if needed since initial value is 0
         ret[0] = 1;
 
         return new int[][]{ret};
@@ -314,7 +299,7 @@ public class Wed_CPSolver {
      * @return array of all I_ik
      */
 
-    private IntVar[] allKExps(int k) {
+    private IntVar[] allKExps (int k){
         IntVar[] ret = new IntVar[invitedNumber];
         for (int i = 0; i < invitedNumber; i++) {
             ret[i] = exps[i][k];
@@ -327,31 +312,32 @@ public class Wed_CPSolver {
     /**
      * init test,
      * with data of tables and Invite list.
-     *
      * @return A wedding problem solver instance, with invite and tables lists
      */
     public static Wed_CPSolver initTest() {
-        List<Invitee> inviteLst = initTestParticipants(2, 3, 8, 12);
+        List<Invitee> inviteLst = initTestParticipants(2,3,4,6);
 //        List<Integer> tableLst = new ArrayList<Integer>(Arrays.asList(30, 3, 3, 3, 3, 3,3, 3, 3, 4));
-        List<Integer> tableLst = new ArrayList<Integer>(Arrays.asList(4, 4, 6, 6, 3, 2));
+        List<Integer> tableLst = new ArrayList<Integer>(Arrays.asList(4, 4, 6, 3));
 
         return new Wed_CPSolver(inviteLst, tableLst);
     }
 
     private static List<Invitee> initTestParticipants(int a, int b, int c, int d) {
         List<Invitee> inviteLst = new ArrayList<>();
-        for (int i = 0; i < a; i++) {
-            inviteLst.add(new Invitee("G_" + i, i, true, Category.FAMILY, "Goldberg's", false));
+        for (int i = 0; i < a ; i++ ){
+            inviteLst.add(new Invitee("G_" + i,i,true, Category.FAMILY,"Goldberg's", false ));
         }
-        for (int i = 0; i < b; i++) {
-            inviteLst.add(new Invitee("M_" + i, i, false, Category.FAMILY, "Michaeli'", false));
+        for (int i = 0; i < b ; i++ ){
+            inviteLst.add(new Invitee("M_" + i,i,false, Category.FAMILY,"Michaeli'", false ));
         }
-        for (int i = 0; i < c; i++) {
-            inviteLst.add(new Invitee("T_" + i, i, true, Category.WORK, "TSA Corporations", false));
+        for (int i = 0; i < c ; i++ ){
+            inviteLst.add(new Invitee("T_" + i,i,true, Category.WORK,"TSA Corporations", false ));
         }
-        for (int i = 0; i < d; i++) {
-            inviteLst.add(new Invitee("D_" + i, i, false, Category.FRIENDS, "Military duty", false));
+        for (int i = 0; i < d ; i++ ){
+            inviteLst.add(new Invitee("D_" + i,i,false, Category.FRIENDS,"Military duty", false ));
         }
+
+        inviteLst.toArray();
         return inviteLst;
     }
 
