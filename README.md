@@ -6,10 +6,10 @@ Implementing a new approach to the partition problem, when relationships are eva
 A summer project to learn different technologies. 
 * Current state of the project: engine works, website in his first steps.
 
-Problem: Finding the optimal partition of invitees to tables.
-Solution: Modeling invitees to a complete graph, when edge's weight
-represents the depth of the relationship between two invitees.
-Reduction & solution with SAT Solver (Google or-tools).
+- Problem: Finding the optimal partition of invitees to tables.
+- Solution: Modeling invitees to a complete graph, when edge's weight
+- represents the depth of the relationship between two invitees.
+- Reduction & solution with SAT Solver (Google or-tools).
 
 Completed:
 - Engine completed (reduction to Constraints problem, and using Google-ortools). 
