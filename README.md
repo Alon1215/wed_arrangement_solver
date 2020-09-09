@@ -37,9 +37,9 @@ Constraints:
 
 Objective function: 
   Sum: 
-    for every i in invite list: 
-      for every j in invite list:
-        for every k in tables list: 
-          e_ij * (I_ik * I_jk)
+    - for every i in invite list: 
+      - for every j in invite list:
+        - for every k in tables list: 
+          - e_ij * (I_ik * I_jk)
 
 
