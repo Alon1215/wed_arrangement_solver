@@ -4,21 +4,21 @@ Implementing a new approach to the partition problem, when relationships are eva
 (Using Java, Spring Boot, MongoDB and React JS).
 
 A summer project to learn different technologies. 
+* Current state of project: engine works, website in his first steps.
 
 Problem: Finding the optimal partition of invitees to tables.
 Solution: Modeling invitees to a complete graph, when edge's weight
 represents the depth of the relationship between two invitees.
 Reduction & solution with SAT Solver (Google or-tools).
 
-* Current state of project: engine works, website in his first steps.
 
 Completed:
 - Engine completed (reduction to Constraints problem, and using Google-ortools). 
 - Landing page
-- Login
+- Login works
 
 Not finished:
 - Increase engine capabilities to larger inputs (considering changing to an approximation algorithm).
 - Input reader (JSON).
-- Build website and UI 
+- Website and UI. 
 
