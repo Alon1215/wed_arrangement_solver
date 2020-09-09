@@ -10,7 +10,7 @@ Solution: Modeling invitees to a complete graph, when edge's weight
 represents the depth of the relationship between two invitees.
 Reduction & solution with SAT Solver (Google or-tools).
 
-Current state of project: engine works, website in his first steps.
+* Current state of project: engine works, website in his first steps.
 
 Completed:
 - Engine completed (reduction to Constraints problem, and using Google-ortools). 
