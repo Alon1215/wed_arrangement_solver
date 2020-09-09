@@ -36,7 +36,7 @@ Constraints:
   (I_kii =  0 for every i)
 
 Objective function (to be maximized) : 
-  Sum: 
+ - Sum of: 
 - for every i in invite list: 
 - for every j in invite list:
 - for every k in tables list: 
