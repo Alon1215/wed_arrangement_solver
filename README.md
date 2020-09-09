@@ -19,6 +19,6 @@ Completed:
 
 Not finished:
 - Increase engine capabilities to larger inputs (considering changing to an approximation algorithm).
-- Input reader (from JSON).
+- Input reader (JSON).
 - Build website and UI 
 
