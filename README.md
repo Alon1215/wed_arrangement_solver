@@ -4,13 +4,7 @@ Implementing a new approach to the partition problem, when relationships are eva
 (Using Java, Spring Boot, MongoDB and React JS).
 
 A summer project to learn different technologies. 
-* Current state of the project: engine works, website in his first steps.
-
-- Problem: Finding the optimal partition of invitees to tables.
-- Solution: Modeling invitees to a complete graph, when edge's weight
-- represents the depth of the relationship between two invitees.
-- Reduction & solution with SAT Solver (Google or-tools).
-
+# Current state of the project:
 Completed:
 - Engine completed (reduction to Constraints problem, and using Google-ortools). 
 - Landing page
@@ -21,8 +15,12 @@ Not finished:
 - Input reader (JSON).
 - Website and UI. 
 
-
 # Logic of algorithm:
+- Problem: Finding the optimal partition of invitees to tables.
+- Solution: Modeling invitees to a complete graph, when edge's weight
+- represents the depth of the relationship between two invitees.
+- Reduction & solution with SAT Solver (Google or-tools).
+
 Input: an invite list (with different fields of information for every invitee), and a list of tables (by sizes).
 
 Varibles: for each invitee i, and for every table K, I_ik = Indictor ([0,1]) if person i sits in table k.
