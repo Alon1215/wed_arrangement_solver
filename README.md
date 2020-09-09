@@ -25,8 +25,9 @@ Not finished:
 
 Input: an invite list (with different fields of information for every invitee), and a list of tables (by sizes).
 
-Varibles: for each invitee i, and for every table K, I_ik = Indictor ([0,1]) if person i sits in table k.
- In addition, for every two distinct invitees i,j and table k, I_ijk = I_ik * I_jk.
+Varibles: 
+- for each invitee i, and for every table K, I_ik = Indictor ([0,1]) if person i sits in table k.
+- In addition, for every two distinct invitees i,j and table k, I_ijk = I_ik * I_jk.
  
 Constraints: 
  * Constraint_1: I_ik := invitee i seats in table k (1 if so, else 0).
