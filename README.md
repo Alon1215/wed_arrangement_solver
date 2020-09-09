@@ -20,8 +20,7 @@ Not finished:
 
 # Logic of algorithm:
 - Problem: Finding the optimal partition of invitees to tables.
-- Solution: Modeling invitees to a complete graph, when edge's weight
-- represents the depth of the relationship between two invitees.
+- Solution: Modeling invitees to a complete graph, when edge's weight represents the depth of the relationship between two invitees.
 - Reduction & solution with SAT Solver (Google or-tools).
 
 Input: an invite list (with different fields of information for every invitee), and a list of tables (by sizes).
