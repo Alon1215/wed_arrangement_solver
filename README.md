@@ -1,6 +1,6 @@
 # wed_arrangement_solver
 wedding sitting arrangement webApp.
-Implementing a new approach to the partition problem, when relationships are evaluated, and the core to the optimal partition.
+Implementing a new approach to the partition problem, when relationships are evaluated, and are the core of an optimal partition.
 (Using Java, Spring Boot, MongoDB and React JS).
 
 A summer project to learn new & different technologies. 
@@ -9,9 +9,9 @@ Current state of the project:
 - Engine works, website in his first steps.
 
 Completed:
-- Engine completed (reduction to Constraints problem, and using Google-ortools). 
-- Landing page
-- Login works
+- Engine completed (reduction to Constraints problem, using Google-ortools). 
+- Landing page.
+- Login works.
 
 Not finished:
 - Increase engine capabilities to larger inputs (considering changing to an approximation algorithm).
