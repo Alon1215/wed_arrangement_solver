@@ -11,7 +11,7 @@ Completed:
 - Login works
 
 Not finished:
-- Increase engine capabilities to larger inputs (current capabillity <= 20, considering changing to an approximation algorithm).
+- Increase engine capabilities to larger inputs (considering changing to an approximation algorithm).
 - Input reader (JSON).
 - Website and UI. 
 
