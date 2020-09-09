@@ -35,11 +35,11 @@ Constraints:
  * Constraint_4: I_ik = 1 & I_jk = 1  <=> I_kij = 1 
   (I_kii =  0 for every i)
 
-Objective function: 
+Objective function (to be maximized) : 
   Sum: 
-    - for every i in invite list: 
-      - for every j in invite list:
-        - for every k in tables list: 
-          - e_ij * (I_ik * I_jk)
+- for every i in invite list: 
+- for every j in invite list:
+- for every k in tables list: 
+- e_ij * (I_ik * I_jk)
 
 
