@@ -5,8 +5,7 @@ Implementing a new approach to the partition problem, when relationships are eva
 
 A summer project to learn new & different technologies. 
 
-Current state of the project:
-- Engine works, website in his first steps.
+**Current state of the project: Engine works, website in his first steps.**
 
 Completed:
 - Engine completed (reduction to Constraints problem, using Google-ortools). 
