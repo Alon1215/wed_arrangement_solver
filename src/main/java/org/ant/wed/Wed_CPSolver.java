@@ -126,7 +126,7 @@ public class Wed_CPSolver {
      * Constraint_1: I_kij = I_kji (I_kii =  0 for every i)
      * Constraint_2: table size = max residents in table k
      * Constraint_3: each i seats exactly in one table
-     * Constraint_4: I_ik = 1 & I_jk = 1  <=> for all: q != k, I_kij = 1
+     * Constraint_4: I_ik = 1 & I_jk = 1  <=> I_kij = 1
      * set model to maximize the objective expression
      */
     private void setupModel2() {
